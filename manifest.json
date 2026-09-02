@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "id": "esh.orbit",
+  "name": "Orbit",
+  "version": "1.0.0",
+  "author": "Eshayat Al-Wasiu",
+  "license": "MIT",
+  "description": "A draggable voice assistant that listens, acts, and shows concise responses.",
+  "kinds": [
+    "service",
+    "overlay",
+    "bar-widget"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml",
+    "overlay": "Overlay.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Orbit",
+    "description": "Configure Orbit to act through your preferred agent.",
+    "category": "AI",
+    "aliases": [
+      "blob",
+      "assistant",
+      "agent"
+    ],
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "agent": "opencode",
+      "model": "",
+      "thinkingLevel": "",
+      "blobSize": 132,
+      "blobVisible": true,
+      "positionPreset": "bottom-left",
+      "positions": {},
+      "conversation": [],
+      "pendingQuestion": "",
+      "pendingOptions": []
+    },
+    "schema": [
+      {
+        "key": "agent",
+        "type": "enum",
+        "label": "AI agent",
+        "options": ["agy", "claude", "codex", "copilot", "crush", "grok", "hermes", "omp", "opencode", "ori", "pi"],
+        "defaultValue": "opencode"
+      },
+      {
+        "key": "model",
+        "type": "string",
+        "label": "Model",
+        "defaultValue": ""
+      },
+      {
+        "key": "thinkingLevel",
+        "type": "string",
+        "label": "Thinking level",
+        "defaultValue": ""
+      },
+      {
+        "key": "blobSize",
+        "type": "integer",
+        "label": "Size",
+        "min": 88,
+        "max": 220,
+        "step": 4,
+        "defaultValue": 132
+      },
+      {
+        "key": "blobVisible",
+        "type": "boolean",
+        "label": "Show Orbit",
+        "defaultValue": true
+      },
+      {
+        "key": "positionPreset",
+        "type": "enum",
+        "label": "Position",
+        "options": ["top-left", "top-center", "top-right", "middle-left", "middle-center", "middle-right", "bottom-left", "bottom-center", "bottom-right", "custom"],
+        "defaultValue": "bottom-left"
+      }
+    ]
+  }
+}
