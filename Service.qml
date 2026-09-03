@@ -86,6 +86,7 @@ Item {
     { value: "crush", label: "Crush", description: "Charm's coding agent" },
     { value: "grok", label: "Grok", description: "xAI's coding agent" },
     { value: "hermes", label: "Hermes", description: "Nous Research's agent" },
+    { value: "ollama", label: "Ollama", description: "Local Ollama models" },
     { value: "omp", label: "omp", description: "Terminal coding agent" },
     { value: "opencode", label: "OpenCode", description: "Open source coding agent" },
     { value: "ori", label: "Ori", description: "OpenRouter's agent harness" },
@@ -266,6 +267,8 @@ Item {
       add("xhigh", "Extra high"); add("max", "Maximum")
       return options
     }
+    if (agentName === "ollama")
+      return [{ value: "", label: "Agent default (no thinking)" }]
     if (agentName === "opencode") {
       add("none", "No thinking"); add("low", "Low"); add("medium", "Medium")
       add("high", "High"); add("xhigh", "Extra high")
@@ -290,6 +293,7 @@ Item {
       return ["jq", "-r", ".models[] | [.slug, .display_name] | @tsv", root.homeDir + "/.codex/models_cache.json"]
     if (agentName === "crush") return ["crush", "models"]
     if (agentName === "grok") return ["grok", "models"]
+    if (agentName === "ollama") return ["bash", "-c", "curl -s http://localhost:11434/api/tags | jq '{models: [.models[] | {id: .name, name: .name}]}'"]
     if (agentName === "omp") return ["omp", "models", "--json"]
     if (agentName === "opencode") return ["opencode", "models"]
     if (agentName === "ori") return ["ori", "omp", "models", "--json"]
@@ -702,6 +706,7 @@ Item {
     if (root.agent === "grok") return ["grok", "--permission-mode", "bypassPermissions", "--output-format", "plain"].concat(selected, thinking === "" ? [] : ["--reasoning-effort", thinking], ["--single", prompt])
     if (root.agent === "hermes") return ["hermes", "--yolo"].concat(selected, ["--oneshot", prompt])
     if (root.agent === "omp") return ["omp", "--print", "--auto-approve", "--no-session"].concat(selected, thinking === "" ? [] : ["--thinking", piThinking], hasScreenshot ? ["@" + screenshotPath] : [], [prompt])
+    if (root.agent === "ollama") return [root.homeDir + "/.config/omarchy/plugins/" + root.pluginId + "/run-ollama.sh", root.model, prompt, screenshotPath]
     if (root.agent === "ori") return ["ori", "omp"].concat(thinking === "" ? [] : ["--reasoning-effort", thinking], ["--print", "--auto-approve", "--no-session"], selected, hasScreenshot ? ["@" + screenshotPath] : [], [prompt])
     if (root.agent === "pi") return ["pi", "--print", "--no-session"].concat(selected, thinking === "" ? [] : ["--thinking", piThinking], hasScreenshot ? ["@" + screenshotPath] : [], [prompt])
     return [root.opencodeRunner, prompt, root.model, thinking, screenshotPath]

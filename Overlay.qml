@@ -79,21 +79,22 @@ Item {
        }
 
        function formatInline(value) {
-         var chunks = String(value).split(/(`[^`\n]+`)/)
-         for (var i = 0; i < chunks.length; i++) {
-           if (/^`[^`]+`$/.test(chunks[i])) {
-             chunks[i] = "<span style=\"font-family:monospace; font-size:" + Style.font.bodySmall
-               + "px; background-color:" + Qt.darker(Color.popups.background, 1.35)
-               + "; border:1px solid " + Color.popups.border + "; padding:1px 3px\">"
-               + escapeHtml(chunks[i].slice(1, -1)) + "</span>"
-           } else {
-             chunks[i] = escapeHtml(chunks[i])
-               .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
-               .replace(/__([^_]+)__/g, "<b>$1</b>")
-               .replace(/\*([^*]+)\*/g, "<i>$1</i>")
-           }
-         }
-         return chunks.join("")
+          var code = []
+          var tokenized = String(value).replace(/`([^`\n]+)`/g, function(match, contents) {
+            var index = code.length
+            code.push(contents)
+            return "\uE000" + index + "\uE001"
+          })
+          var html = escapeHtml(tokenized)
+            .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
+            .replace(/__(.+?)__/g, "<b>$1</b>")
+            .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<i>$2</i>")
+          return html.replace(/\uE000(\d+)\uE001/g, function(match, index) {
+            return "<span style=\"font-family:monospace; font-size:" + Style.font.bodySmall
+              + "px; background-color:" + Qt.darker(Color.popups.background, 1.35)
+              + "; border:1px solid " + Color.popups.border + "; padding:1px 3px\">"
+              + escapeHtml(code[Number(index)]) + "</span>"
+          })
        }
 
        function tableCells(line) {

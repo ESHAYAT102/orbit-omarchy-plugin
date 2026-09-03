@@ -45,7 +45,7 @@
         "key": "agent",
         "type": "enum",
         "label": "AI agent",
-        "options": ["agy", "claude", "codex", "copilot", "crush", "grok", "hermes", "omp", "opencode", "ori", "pi"],
+        "options": ["agy", "claude", "codex", "copilot", "crush", "grok", "hermes", "ollama", "omp", "opencode", "ori", "pi"],
         "defaultValue": "opencode"
       },
       {

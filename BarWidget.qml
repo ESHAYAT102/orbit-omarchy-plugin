@@ -257,11 +257,10 @@ Panel {
           Dropdown {
             id: thinkingPicker
             width: parent.width
+            visible: root.blobService && root.blobService.thinkingOptions.length > 1
             label: "Thinking level"
             value: root.blobService ? root.blobService.thinkingLevel : ""
             options: root.blobService ? root.blobService.thinkingOptions : []
-            enabled: !root.blobService || root.blobService.thinkingOptions.length > 1
-            opacity: enabled ? 1 : 0.62
             foreground: root.foreground
             fontFamily: root.fontFamily
             onChanged: function(next) { root.setSetting("thinkingLevel", next) }
