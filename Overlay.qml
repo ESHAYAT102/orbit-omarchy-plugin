@@ -14,7 +14,7 @@ Item {
   property var manifest: null
 
   Variants {
-    model: Quickshell.screens
+    model: Quickshell.screens.slice(0, 1)
 
     PanelWindow {
       id: window
