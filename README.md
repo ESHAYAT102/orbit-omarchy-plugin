@@ -18,7 +18,7 @@ Orbit is a voice and text interface for AI coding agents in the Omarchy Shell. I
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/ESHAYAT102/orbit.git --enable
+omarchy plugin add https://github.com/ESHAYAT102/orbit-omarchy-plugin.git --enable
 ```
 
 Open the Orbit bar widget to choose an installed agent, model, size, and position.
